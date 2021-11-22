@@ -1,0 +1,9 @@
+{
+  "name": "EvolutionThroughResearch_ConstMax",
+  "version": "0.1.1",
+  "title": "EvolutionThroughResearch_ConstMax",
+  "author": "CaveGrinder",
+  "description": "sets the evolution to 1 / number of finished non infinite research every few seconds. The total number of technologies is a setting.",
+  "factorio_version": "1.1",
+  "dependencies": ["base >= 1.1.46"]
+}
