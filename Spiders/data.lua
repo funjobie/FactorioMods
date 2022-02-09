@@ -1,4 +1,6 @@
-require('prototypes/items')
+require('prototypes/decoratives')
 require('prototypes/entities')
-require('prototypes/recipes')
 require('prototypes/fluids')
+require('prototypes/items')
+require('prototypes/recipes')
+require('prototypes/technologies')

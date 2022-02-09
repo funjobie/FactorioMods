@@ -679,4 +679,311 @@ data:extend(
       }
     }
   },
+  {
+    type = "assembling-machine",
+    name = "termite-hive",
+    icon = "__base__/graphics/icons/assembling-machine-1.png",
+    icon_size = 64, icon_mipmaps = 4,
+    flags = {"placeable-neutral", "placeable-player", "player-creation"},
+    minable = {mining_time = 0.2, result = "termite-hive"},--todo consider not picking it up? mine empty? or destroy only?
+    max_health = 300,
+    corpse = "assembling-machine-1-remnants",
+    dying_explosion = "assembling-machine-1-explosion",
+    resistances =
+    {
+      {
+        type = "fire",
+        percent = 70
+      }
+    },
+    collision_box = {{-1.2, -1.2}, {1.2, 1.2}},
+    selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
+    damaged_trigger_effect = hit_effects.entity(),
+    alert_icon_shift = util.by_pixel(-3, -12),
+    animation =
+    {
+      layers =
+      {
+        {
+          filename = "__base__/graphics/entity/assembling-machine-1/assembling-machine-1.png",
+          priority="high",
+          width = 108,
+          height = 114,
+          frame_count = 32,
+          line_length = 8,
+          shift = util.by_pixel(0, 2),
+          hr_version =
+          {
+            filename = "__base__/graphics/entity/assembling-machine-1/hr-assembling-machine-1.png",
+            priority="high",
+            width = 214,
+            height = 226,
+            frame_count = 32,
+            line_length = 8,
+            shift = util.by_pixel(0, 2),
+            scale = 0.5
+          }
+        },
+        {
+          filename = "__base__/graphics/entity/assembling-machine-1/assembling-machine-1-shadow.png",
+          priority="high",
+          width = 95,
+          height = 83,
+          frame_count = 1,
+          line_length = 1,
+          repeat_count = 32,
+          draw_as_shadow = true,
+          shift = util.by_pixel(8.5, 5.5),
+          hr_version =
+          {
+            filename = "__base__/graphics/entity/assembling-machine-1/hr-assembling-machine-1-shadow.png",
+            priority="high",
+            width = 190,
+            height = 165,
+            frame_count = 1,
+            line_length = 1,
+            repeat_count = 32,
+            draw_as_shadow = true,
+            shift = util.by_pixel(8.5, 5),
+            scale = 0.5
+          }
+        }
+      }
+    },
+    crafting_categories = {"termites-crafting"},
+    crafting_speed = 1.0,
+    energy_source =
+    {
+      type = "void",
+      emissions_per_minute = 0,
+      render_no_power_icon = true,
+    },
+    energy_usage = "75kW",
+    open_sound = sounds.machine_open,
+    close_sound = sounds.machine_close,
+    vehicle_impact_sound = sounds.generic_impact,
+    working_sound =
+    {
+      sound =
+      {
+        {
+          filename = "__base__/sound/assembling-machine-t1-1.ogg",
+          volume = 0.5
+        }
+      },
+      audible_distance_modifier = 0.5,
+      fade_in_ticks = 4,
+      fade_out_ticks = 20
+    }
+  },
+  {
+    type = "lab",
+    name = "spider-research-lab",
+    icon = "__base__/graphics/icons/lab.png",
+    icon_size = 64, icon_mipmaps = 4,
+    flags = {"placeable-player", "player-creation"},
+    minable = {mining_time = 0.2, result = "spider-research-lab"},
+    max_health = 150,
+    corpse = "lab-remnants",
+    dying_explosion = "lab-explosion",
+    --collision_box = {{-1.2, -1.2}, {1.2, 1.2}},
+    collision_box = {{0, 0}, {0, 0}},
+    selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
+    damaged_trigger_effect = hit_effects.entity(),
+    on_animation =
+    {
+      layers =
+      {
+        {
+          filename = "__base__/graphics/entity/lab/lab.png",
+          width = 98,
+          height = 87,
+          frame_count = 33,
+          line_length = 11,
+          animation_speed = 1 / 3,
+          shift = util.by_pixel(0, 1.5),
+          hr_version =
+          {
+            filename = "__base__/graphics/entity/lab/hr-lab.png",
+            width = 194,
+            height = 174,
+            frame_count = 33,
+            line_length = 11,
+            animation_speed = 1 / 3,
+            shift = util.by_pixel(0, 1.5),
+            scale = 0.5
+          }
+        },
+        {
+          filename = "__base__/graphics/entity/lab/lab-integration.png",
+          width = 122,
+          height = 81,
+          frame_count = 1,
+          line_length = 1,
+          repeat_count = 33,
+          animation_speed = 1 / 3,
+          shift = util.by_pixel(0, 15.5),
+          hr_version =
+          {
+            filename = "__base__/graphics/entity/lab/hr-lab-integration.png",
+            width = 242,
+            height = 162,
+            frame_count = 1,
+            line_length = 1,
+            repeat_count = 33,
+            animation_speed = 1 / 3,
+            shift = util.by_pixel(0, 15.5),
+            scale = 0.5
+          }
+        },
+        {
+          filename = "__base__/graphics/entity/lab/lab-light.png",
+          blend_mode = "additive",
+          draw_as_light = true,
+          width = 106,
+          height = 100,
+          frame_count = 33,
+          line_length = 11,
+          animation_speed = 1 / 3,
+          shift = util.by_pixel(-1, 1),
+          hr_version =
+          {
+            filename = "__base__/graphics/entity/lab/hr-lab-light.png",
+            blend_mode = "additive",
+            draw_as_light = true,
+            width = 216,
+            height = 194,
+            frame_count = 33,
+            line_length = 11,
+            animation_speed = 1 / 3,
+            shift = util.by_pixel(0, 0),
+            scale = 0.5
+          }
+        },
+        {
+          filename = "__base__/graphics/entity/lab/lab-shadow.png",
+          width = 122,
+          height = 68,
+          frame_count = 1,
+          line_length = 1,
+          repeat_count = 33,
+          animation_speed = 1 / 3,
+          shift = util.by_pixel(13, 11),
+          draw_as_shadow = true,
+          hr_version =
+          {
+            filename = "__base__/graphics/entity/lab/hr-lab-shadow.png",
+            width = 242,
+            height = 136,
+            frame_count = 1,
+            line_length = 1,
+            repeat_count = 33,
+            animation_speed = 1 / 3,
+            shift = util.by_pixel(13, 11),
+            scale = 0.5,
+            draw_as_shadow = true
+          }
+        }
+      }
+    },
+    off_animation =
+    {
+      layers =
+      {
+        {
+          filename = "__base__/graphics/entity/lab/lab.png",
+          width = 98,
+          height = 87,
+          frame_count = 1,
+          shift = util.by_pixel(0, 1.5),
+          hr_version =
+          {
+            filename = "__base__/graphics/entity/lab/hr-lab.png",
+            width = 194,
+            height = 174,
+            frame_count = 1,
+            shift = util.by_pixel(0, 1.5),
+            scale = 0.5
+          }
+        },
+        {
+          filename = "__base__/graphics/entity/lab/lab-integration.png",
+          width = 122,
+          height = 81,
+          frame_count = 1,
+          shift = util.by_pixel(0, 15.5),
+          hr_version =
+          {
+            filename = "__base__/graphics/entity/lab/hr-lab-integration.png",
+            width = 242,
+            height = 162,
+            frame_count = 1,
+            shift = util.by_pixel(0, 15.5),
+            scale = 0.5
+          }
+        },
+        {
+          filename = "__base__/graphics/entity/lab/lab-shadow.png",
+          width = 122,
+          height = 68,
+          frame_count = 1,
+          shift = util.by_pixel(13, 11),
+          draw_as_shadow = true,
+          hr_version =
+          {
+            filename = "__base__/graphics/entity/lab/hr-lab-shadow.png",
+            width = 242,
+            height = 136,
+            frame_count = 1,
+            shift = util.by_pixel(13, 11),
+            draw_as_shadow = true,
+            scale = 0.5
+          }
+        }
+      }
+    },
+    working_sound =
+    {
+      sound =
+      {
+        filename = "__base__/sound/lab.ogg",
+        volume = 0.7
+      },
+      audible_distance_modifier = 0.7,
+      fade_in_ticks = 4,
+      fade_out_ticks = 20
+    },
+    vehicle_impact_sound = sounds.generic_impact,
+    open_sound = sounds.machine_open,
+    close_sound = sounds.machine_close,
+    energy_source =
+    {
+      type = "fluid",
+      emissions_per_minute = 0,
+      render_no_power_icon = true,
+      fluid_box =
+      {
+        base_area = 0.2,
+        height = 1,
+        base_level = 0,
+        pipe_connections =
+        {
+        },
+        production_type = "input",
+        filter = "spider-labor"
+      },
+      burns_fluid = true,
+      scale_fluid_usage = true,
+      effectivity = 1,
+    },
+    --energy_usage = "75kW",
+    energy_usage = "75W",--todo adapt? in case spider labor value changes
+    researching_speed = 1,
+    inputs = {"condensed-nutrient-paste"},
+    --module_specification =
+    --{
+    --  module_slots = 2,
+    --  module_info_icon_shift = {0, 0.9}
+    --}
+  },
 })

@@ -4,9 +4,9 @@ local function init_globals()
   
   global.version = "0.1.1"
   
-  global.spider_queen_hive = {}
-  global.spider_queen_hive.map_entity_to_hidden_entity = {}
-  global.spider_queen_hive.map_hidden_entity_to_entity = {}
+  global.spider_building_enterable = {}
+  global.spider_building_enterable.map_entity_to_hidden_entity = {}
+  global.spider_building_enterable.map_hidden_entity_to_entity = {}
   
 end
 
@@ -25,27 +25,51 @@ script.on_configuration_changed(function()
   updateModVersion()
 end)
 
-local function on_built(entity)
-  if entity.name == "spider-queen-hive" then
-    --local newEntity = entity.surface.create_entity{name = "spider-queen-hive-car", position = entity.position, force = entity.force}
-    local new_ent_pos = entity.position
-	--new_ent_pos.x = new_ent_pos.x -3;
-	local newEntity = entity.surface.create_entity{name = "spider-queen-hive-car", position = new_ent_pos, force = entity.force}
-    newEntity.destructible = false
-    newEntity.minable = false
-    global.spider_queen_hive.map_entity_to_hidden_entity[entity.unit_number] = newEntity
-    global.spider_queen_hive.map_hidden_entity_to_entity[newEntity.unit_number] = entity
+local function can_enter_spider_building(entity)
+  if entity.name == "spider-research-lab" or entity.name == "spider-queen-hive" then
+    return true
   end
 end
 
+local function on_built(entity)
+  if can_enter_spider_building(entity) then
+    local newEntity = entity.surface.create_entity{name = "spider-queen-hive-car", position = entity.position, force = entity.force}
+    newEntity.destructible = false
+    newEntity.minable = false
+    global.spider_building_enterable.map_entity_to_hidden_entity[entity.unit_number] = newEntity
+    global.spider_building_enterable.map_hidden_entity_to_entity[newEntity.unit_number] = entity
+  end
+end
+
+local function isATreeWithTermites(entity)
+  if entity.name == "dead-tree-desert" or entity.name == "dead-grey-trunk" or entity.name == "dead-dry-hairy-tree" then 
+    return true
+  end
+  return false
+end
+
 local function on_unbuilt(entity)
-  if entity.name == "spider-queen-hive" then
-    if global.spider_queen_hive.map_entity_to_hidden_entity[entity.unit_number].valid then
-      local hidden_entity = global.spider_queen_hive.map_entity_to_hidden_entity[entity.unit_number]
-      global.spider_queen_hive.map_hidden_entity_to_entity[hidden_entity.unit_number] = nil
+  if can_enter_spider_building(entity) then
+    if global.spider_building_enterable.map_entity_to_hidden_entity[entity.unit_number].valid then
+      local hidden_entity = global.spider_building_enterable.map_entity_to_hidden_entity[entity.unit_number]
+      global.spider_building_enterable.map_hidden_entity_to_entity[hidden_entity.unit_number] = nil
       hidden_entity.destroy()
     end
-    global.spider_queen_hive.map_entity_to_hidden_entity[entity.unit_number] = nil
+    global.spider_building_enterable.map_entity_to_hidden_entity[entity.unit_number] = nil
+  end
+  game.players[1].print("stuf died: " .. entity.name)
+  if isATreeWithTermites(entity) then
+    local num = math.random(100)
+    local loot = 0
+    if num >= 50 and num < 60 then loot = 3 end
+    if num >= 60 and num < 70 then loot = 4 end
+    if num >= 70 and num < 80 then loot = 5 end
+    if num >= 80 and num < 90 then loot = 6 end
+    if num >= 90 and num < 100 then loot = 7 end
+    if loot > 0 then
+      entity.surface.spill_item_stack(entity.position, {name="termite", count=loot}, true)
+    end
+    game.players[1].print("rolling " .. tostring(loot))
   end
 end
 
@@ -80,8 +104,8 @@ end)
 local function spiderLabor_check_entities(event)
   for _, player in pairs(game.connected_players) do
     if player.vehicle and player.vehicle.name == "spider-queen-hive-car" then
-      local assembler = global.spider_queen_hive.map_hidden_entity_to_entity[player.vehicle.unit_number]
-      local fluidBoxes = assembler.fluidbox
+      local entity = global.spider_building_enterable.map_hidden_entity_to_entity[player.vehicle.unit_number]
+      local fluidBoxes = entity.fluidbox
       if fluidBoxes then
         for fluidBoxIndex = 1,#fluidBoxes do
           local filter = fluidBoxes.get_filter(fluidBoxIndex)
